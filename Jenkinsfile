@@ -111,7 +111,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         script {
-          sleep time: 120, unit: 'SECONDS'
+          sleep time: 150, unit: 'SECONDS'
           build(job: "test_runner", parameters: [
             string(name: 'BRANCH', value: "${params.BRANCH}"),
             string(name: 'SL_LABID', value: "${env.LAB_ID}"),
