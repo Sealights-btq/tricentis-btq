@@ -251,79 +251,77 @@ func (fe *frontendServer) emptyCartHandler(w http.ResponseWriter, r *http.Reques
 func (fe *frontendServer) added(w http.ResponseWriter, r *http.Request) {
 	log := r.Context().Value(ctxKeyLog{}).(logrus.FieldLogger)
 	log.Debug("added")
-	
+
 	w.Header().Set("Content-Type", "application/json")
-    message := map[string]string{"message": "Hello from the frontend service!"}
-    json.NewEncoder(w).Encode(message)
+	message := map[string]string{"message": "Hello from the frontend service!"}
+	json.NewEncoder(w).Encode(message)
 }
 
-// check api with value, nested, function in another file
+// ceck api with value, nested, function in another file
 func (fe *frontendServer) addedNumber(w http.ResponseWriter, r *http.Request) {
 	log := r.Context().Value(ctxKeyLog{}).(logrus.FieldLogger)
 	log.Debug("added number")
 	num := mux.Vars(r)["num"]
 	if num == "5" {
 		w.Header().Set("Content-Type", "application/json")
-		message := map[string]string{"message": "Number equals 5"}
+		message := map[string]string{"message": "Number equals 5" + nestedFunction()}
 		json.NewEncoder(w).Encode(message)
-		nestedFunction()
 	} else if num == "4" {
 		w.Header().Set("Content-Type", "application/json")
-		message := map[string]string{"message": "Number equal 4"}
+		message := map[string]string{"message": "Number equal 4" + AnotherFile()}
 		json.NewEncoder(w).Encode(message)
-		AnotherFile()
 	} else {
 		w.Header().Set("Content-Type", "application/json")
 		message := map[string]string{"message": "Number not equal 5 nor 4"}
 		json.NewEncoder(w).Encode(message)
 	}
 }
-func nestedFunction() {
-    nestedFunction1()
+func nestedFunction() string {
+	return nestedFunction1()
 }
-func nestedFunction1() {
-    nestedFunction2()
+func nestedFunction1() string {
+	return nestedFunction2()
 }
-func nestedFunction2() {
-    fmt.Println("Nested function")
+func nestedFunction2() string {
+	return "Nested function"
 }
 
 // If in api content
 type Data struct {
-    Num  int    `json:"num"`
+	Num int `json:"num"`
 }
 
 func (fe *frontendServer) addedContent(w http.ResponseWriter, r *http.Request) {
-    if r.Method == "POST" {
-        var data Data
-        err := json.NewDecoder(r.Body).Decode(&data)
-        if err != nil {
-            http.Error(w, err.Error(), http.StatusBadRequest)
-            return
-        }
-		if data.Num == 5 {
-			
-		}else if data.Num == 4 {
-			fmt.Println("Num is 4")
-		} else {
-			nestedFunctionContentNone()
+	if r.Method == "POST" {
+		var data Data
+		err := json.NewDecoder(r.Body).Decode(&data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
-    }
+		if data.Num == 5 {
+			fmt.Fprint(w, "Num is 5")
+		} else if data.Num == 4 {
+			fmt.Fprint(w, "Num is 4")
+		} else {
+			fmt.Fprint(w, nestedFunctionContent())
+		}
+	}
 	if r.Method == "GET" {
-		fmt.Println("Method is GET")
+		fmt.Fprint(w, "Method is GET")
 	}
 	if r.Method == "DELETE" {
-		nestedFunctionContentDELETE()
+		fmt.Fprint(w, nestedFunctionContentDELETE())
 	}
 }
-func nestedFunctionContent() {
-    fmt.Println("Nested function Content")
+func nestedFunctionContent() string {
+	return nestedFunctionContentNone()
 }
-func nestedFunctionContentNone() {
-    fmt.Println("Nested function Content none of the ifs")
+func nestedFunctionContentNone() string {
+	return "Nested function Content none of the ifs"
 }
-func nestedFunctionContentDELETE() {
-    fmt.Println("Method is DELETE")
+func nestedFunctionContentDELETE() string {
+	return "Method is DELETE"
 }
 
 // End of Added new api function
