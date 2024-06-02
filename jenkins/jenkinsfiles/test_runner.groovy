@@ -198,7 +198,7 @@ pipeline {
                         libxrandr2 \
                         xdg-utils \
                         libgbm1 > /dev/null
-                        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                        wget -nv https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
                       apt install -y ./google-chrome-stable_current_amd64.deb > /dev/null
                       pip install -r requirements.txt
                       robot --listener "SLListener.py:${env.SL_TOKEN}::Robot Tests:${params.SL_LABID}" ./
@@ -391,7 +391,7 @@ pipeline {
           if( params.Run_all_tests == true || params.Soapui == true) {
             sh """
               echo 'Soap-UI framework starting ..... '
-              wget https://dl.eviware.com/soapuios/5.7.1/SoapUI-5.7.1-mac-bin.zip
+              wget -nv https://dl.eviware.com/soapuios/5.7.1/SoapUI-5.7.1-mac-bin.zip
               unzip SoapUI-5.7.1-mac-bin.zip
               cp integration-tests/soapUI/test-soapui-project.xml SoapUI-5.7.1/bin
               cd SoapUI-5.7.1/bin
