@@ -1,0 +1,38 @@
+[
+  {
+    "description": "Valid VISA card",
+    "request": {
+      "amount": {
+        "currency_code": "USD",
+        "units": 100,
+        "nanos": 0
+      },
+      "credit_card": {
+        "credit_card_number": "4111111111111111",
+        "credit_card_expiration_year": 2025,
+        "credit_card_expiration_month": 12
+      }
+    },
+    "expected": {
+      "transaction_id": true
+    }
+  },
+  {
+    "description": "Invalid Credit Card",
+    "request": {
+      "amount": {
+        "currency_code": "USD",
+        "units": 100,
+        "nanos": 0
+      },
+      "credit_card": {
+        "credit_card_number": "1234567890123456",
+        "credit_card_expiration_year": 2025,
+        "credit_card_expiration_month": 12
+      }
+    },
+    "expected": {
+      "error": "Credit card info is invalid"
+    }
+  }
+]

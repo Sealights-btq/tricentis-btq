@@ -38,6 +38,8 @@ RUN npm i ${SEALIGHTS_NODE_AGENT}
 RUN  ./node_modules/.bin/slnodejs config --token ${SEALIGHTS_TOKEN} --appname "paymentservice" --branch ${BRANCH} --build ${BUILD_NAME}
 #Scan the code
 RUN ./node_modules/.bin/slnodejs scan --token ${SEALIGHTS_TOKEN} --buildsessionidfile buildSessionId --workspacepath "." --scm none --es6Modules
+#Run unit tests
+RUN npx slnodejs mocha --token ${SEALIGHTS_TOKEN} --buildsessionidfile buildSessionId --teststage "Unit Tests" --useslnode2 -- --recursive test
 
 FROM base
 

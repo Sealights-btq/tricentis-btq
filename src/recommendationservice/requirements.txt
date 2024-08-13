@@ -128,6 +128,9 @@ wrapt==1.15.0
     #   opentelemetry-instrumentation
     #   opentelemetry-instrumentation-grpc
 zipp==3.16.2
+grpcio
+grpcio-tools
+python-json-logger
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:

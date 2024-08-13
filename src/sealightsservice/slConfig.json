@@ -1,0 +1,18 @@
+{
+  "appName": "sealightservice",
+  "createBuildSessionId": false,
+  "buildSessionIdFile": "buildSessionId.txt",
+  "tokenFile": "token.txt",
+  "logEnabled": true,
+  "logLevel": "info",
+  "logToConsole": true,
+  "logDestination": "console",
+  "scannerJar": "/sealights/sl-build-scanner-4.0.2506.jar",
+  "listenerJar": "/sealights/sl-test-listener-4.0.2506.jar",
+  "sealightsJvmParams":
+  {
+    "sl.featuresData.lineCoverageVersion": "v2",
+    "sl.featuresData.enableLineCoverage": true,
+    "sl.enableUpgrade": false
+  }
+}

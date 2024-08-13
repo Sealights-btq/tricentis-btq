@@ -39,29 +39,29 @@ from logger import getJSONLogger
 logger = getJSONLogger('recommendationservice-server')
 
 def initStackdriverProfiling():
-  project_id = None
-  try:
-    project_id = os.environ["GCP_PROJECT_ID"]
-  except KeyError:
-    # Environment variable not set
-    pass
-
-  for retry in range(1,4):
+    project_id = None
     try:
-      if project_id:
-        googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0, project_id=project_id)
-      else:
-        googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0)
-      logger.info("Successfully started Stackdriver Profiler.")
-      return
-    except (BaseException) as exc:
-      logger.info("Unable to start Stackdriver Profiler Python agent. " + str(exc))
-      if (retry < 4):
-        logger.info("Sleeping %d seconds to retry Stackdriver Profiler agent initialization"%(retry*10))
-        time.sleep (1)
-      else:
-        logger.warning("Could not initialize Stackdriver Profiler after retrying, giving up")
-  return
+        project_id = os.environ["GCP_PROJECT_ID"]
+    except KeyError:
+        # Environment variable not set
+        pass
+
+    for retry in range(1,4):
+        try:
+            if project_id:
+                googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0, project_id=project_id)
+            else:
+                googlecloudprofiler.start(service='recommendation_server', service_version='1.0.0', verbose=0)
+            logger.info("Successfully started Stackdriver Profiler.")
+            return
+        except (BaseException) as exc:
+            logger.info("Unable to start Stackdriver Profiler Python agent. " + str(exc))
+            if (retry < 4):
+                logger.info("Sleeping %d seconds to retry Stackdriver Profiler agent initialization"%(retry*10))
+                time.sleep (1)
+            else:
+                logger.warning("Could not initialize Stackdriver Profiler after retrying, giving up")
+    return
 
 class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
     def ListRecommendations(self, request, context):
@@ -95,34 +95,34 @@ if __name__ == "__main__":
     logger.info("initializing recommendationservice")
 
     try:
-      if "DISABLE_PROFILER" in os.environ:
-        raise KeyError()
-      else:
-        logger.info("Profiler enabled.")
-        initStackdriverProfiling()
+        if "DISABLE_PROFILER" in os.environ:
+            raise KeyError()
+        else:
+            logger.info("Profiler enabled.")
+            initStackdriverProfiling()
     except KeyError:
         logger.info("Profiler disabled.")
 
     try:
-      grpc_client_instrumentor = GrpcInstrumentorClient()
-      grpc_client_instrumentor.instrument()
-      grpc_server_instrumentor = GrpcInstrumentorServer()
-      grpc_server_instrumentor.instrument()
-      if os.environ["ENABLE_TRACING"] == "1":
-        trace.set_tracer_provider(TracerProvider())
-        otel_endpoint = os.getenv("COLLECTOR_SERVICE_ADDR", "localhost:4317")
-        trace.get_tracer_provider().add_span_processor(
-          BatchSpanProcessor(
-              OTLPSpanExporter(
-              endpoint = otel_endpoint,
-              insecure = True
+        grpc_client_instrumentor = GrpcInstrumentorClient()
+        grpc_client_instrumentor.instrument()
+        grpc_server_instrumentor = GrpcInstrumentorServer()
+        grpc_server_instrumentor.instrument()
+        if os.environ["ENABLE_TRACING"] == "1":
+            trace.set_tracer_provider(TracerProvider())
+            otel_endpoint = os.getenv("COLLECTOR_SERVICE_ADDR", "localhost:4317")
+            trace.get_tracer_provider().add_span_processor(
+                BatchSpanProcessor(
+                    OTLPSpanExporter(
+                        endpoint = otel_endpoint,
+                        insecure = True
+                    )
+                )
             )
-          )
-        )
     except (KeyError, DefaultCredentialsError):
         logger.info("Tracing disabled.")
     except Exception as e:
-        logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.") 
+        logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.")
 
     port = os.environ.get('PORT', "8080")
     catalog_addr = os.environ.get('PRODUCT_CATALOG_SERVICE_ADDR', '')
@@ -147,7 +147,28 @@ if __name__ == "__main__":
 
     # keep alive
     try:
-         while True:
+        while True:
             time.sleep(10000)
     except KeyboardInterrupt:
-            server.stop(0)
+        server.stop(0)
+
+
+class ProductRecommendation:
+    def __init__(self, product_id):
+        self.product_id = product_id
+
+class ListRecommendationsResponse:
+    def __init__(self, recommendations):
+        self.recommendations = recommendations
+
+class RecommendationService:
+    def ListRecommendations(self, request):
+        # Ensure product_ids is a list, even if it's None
+        product_ids = request.get("product_ids") or []
+
+        recommendations = [
+            ProductRecommendation(product_id=pid)
+            for pid in product_ids
+        ]
+
+        return ListRecommendationsResponse(recommendations=recommendations)

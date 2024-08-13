@@ -29,6 +29,9 @@ COPY . .
 RUN sl-python config --appname recommendationservice --branchname ${BRANCH} --buildname ${BUILD_NAME} --workspacepath ./ --token ${SEALIGHTS_TOKEN} --exclude "*grpc*"
 #Scan the code
 RUN sl-python scan --scm none --token ${SEALIGHTS_TOKEN}
+#RUN UNIT TESTS
+RUN sl-python unittest --teststage 'Unit Tests'  --token ${SEALIGHTS_TOKEN} --buildsessionidfile buildSessionId.txt test_all.py
+
 #COPY --from=builder /recommendationservice/buildSessionId.txt .
 #RUN export SL_BUILD_SESSION_ID=`cat buildSessionId.txt`
 ENV SL_DEBUG=true
