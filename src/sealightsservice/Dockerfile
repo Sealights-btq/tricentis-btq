@@ -20,7 +20,7 @@ COPY . /app
 COPY slConfig.json /app/slConfig.json
 
 RUN echo ${SEALIGHTS_TOKEN}>token.txt
-
+RUN chmod +x ./mvnw
 RUN ./mvnw clean package
 RUN java -Dsl.enableUpgrade=false -Dsl.featuresData.enableLineCoverage=true -Dsl.featuresData.lineCoverageVersion=v2 -jar /sealights/sl-build-scanner-4.0.2506.jar -pom -configfile slConfig.json -workspacepath .
 
