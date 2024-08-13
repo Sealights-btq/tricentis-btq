@@ -204,6 +204,7 @@ spec:
     - ./{{ .Values.productCatalogService.name }}.{{ .Release.Namespace }}.svc.cluster.local
     - ./{{ .Values.recommendationService.name }}.{{ .Release.Namespace }}.svc.cluster.local
     - ./{{ .Values.shippingService.name }}.{{ .Release.Namespace }}.svc.cluster.local
+    - ./{{ .Values.sealightsService.name }}.{{ .Release.Namespace }}.svc.cluster.local
     {{- if .Values.opentelemetryCollector.create }}
     - ./{{ .Values.opentelemetryCollector.name }}.{{ .Release.Namespace }}.svc.cluster.local
     {{- end }}
