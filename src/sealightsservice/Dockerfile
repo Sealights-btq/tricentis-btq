@@ -22,9 +22,9 @@ COPY slConfig.json /app/slConfig.json
 RUN echo ${SEALIGHTS_TOKEN}>token.txt
 RUN chmod +x ./mvnw
 RUN ./mvnw clean package
-RUN java -Dsl.enableUpgrade=false -Dsl.featuresData.enableLineCoverage=true -Dsl.featuresData.lineCoverageVersion=v2 -jar /sealights/sl-build-scanner-4.0.2506.jar -pom -configfile slConfig.json -workspacepath .
+RUN java -Dsl.enableUpgrade=false -Dsl.featuresData.enableLineCoverage=true -Dsl.featuresData.lineCoverageVersion=v2 -jar /sealights/sl-build-scanner.jar -pom -configfile slConfig.json -workspacepath .
 
-RUN java -Dsl.enableUpgrade=false -Dsl.featuresData.enableLineCoverage=true -Dsl.featuresData.lineCoverageVersion=v2 -jar /sealights/sl-build-scanner-4.0.2506.jar -config -token "${SEALIGHTS_TOKEN}" -appname "sealightservice" -branchname "${BRANCH}" -buildname "${BUILD_NAME}" -pi "sealights.notes.*" -pe "sealights.notes.sealights"
+RUN java -Dsl.enableUpgrade=false -Dsl.featuresData.enableLineCoverage=true -Dsl.featuresData.lineCoverageVersion=v2 -jar /sealights/sl-build-scanner.jar -config -token "${SEALIGHTS_TOKEN}" -appname "sealightservice" -branchname "${BRANCH}" -buildname "${BUILD_NAME}" -pi "sealights.notes.*" -pe "sealights.notes.sealights"
 # Expose the port that your Spring Boot application listens on
 
 FROM openjdk:17-alpine as runtime
