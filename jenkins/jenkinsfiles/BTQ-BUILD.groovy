@@ -23,7 +23,6 @@ pipeline{
     SL_TOKEN = (sh(returnStdout: true, script:"aws secretsmanager get-secret-value --region eu-west-1 --secret-id 'btq/tricentis_token' | jq -r '.SecretString' | jq -r '.tricentis_token'" )).trim()
     TAG = "tricentis_${params.TAG}"
   }
-
   stages{
     stage('Init') {
       steps {
