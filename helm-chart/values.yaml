@@ -6,10 +6,12 @@ SealightsEnvVars:
   token: ""
   lab_id: ""
   build_name: ""
+  java_agent_url: ""
+  dotnet_agent_url: ""
   sl_branch: ""
 
 images:
-  repository: 474620256508.dkr.ecr.eu-west-1.amazonaws.com
+  repository: 534369319675.dkr.ecr.us-west-2.amazonaws.com
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -57,7 +59,7 @@ adService:
       memory: 180Mi
     limits:
       cpu: 300m
-      memory: 300Mi
+      memory: 400Mi
 
 cartService:
   create: true
@@ -67,7 +69,7 @@ cartService:
       cpu: 300m
       memory: 64Mi
     limits:
-      cpu: 400m
+      cpu: 500m
       memory: 128Mi
 
 checkoutService:
@@ -114,7 +116,7 @@ frontend:
   virtualService:
     create: false
     hosts:
-    - "*"
+      - "*"
     gateway:
       name: asm-ingressgateway
       namespace: asm-ingress
@@ -173,6 +175,17 @@ shippingService:
     limits:
       cpu: 200m
       memory: 128Mi
+
+sealightsService:
+  create: true
+  name: sealightsservice
+  resources:
+    requests:
+      cpu: 200m
+      memory: 180Mi
+    limits:
+      cpu: 400m
+      memory: 640Mi
 
 cartDatabase:
   # Specifies the type of the cartservice's database, could be either redis or spanner.
