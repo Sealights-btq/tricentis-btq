@@ -13,8 +13,8 @@ pipeline{
   parameters {
     string(name: 'TAG', defaultValue: '1.2.2', description: 'latest tag')
     string(name: 'REGION', defaultValue: 'eu-west-1', description: 'latest tag')
-    string(name: 'BRANCH', defaultValue: 'UnitTests', description: 'default branch')
-    choice(name: 'SERVICE', choices: ["adservice","cartservice","checkoutservice", "currencyservice","emailservice","frontend","paymentservice","productcatalogservice","recommendationservice","shippingservice","sealightsservice"], description: 'Service name to build')
+    string(name: 'BRANCH', defaultValue: 'main', description: 'default branch')
+    choice(name: 'SERVICE', choices: ["adservice","cartservice","checkoutservice", "currencyservice","emailservice","frontend","paymentservice","productcatalogservice","recommendationservice","shippingservice"], description: 'Service name to build')
     string(name: 'BUILD_NAME', defaultValue: 'none', description: 'build name')
   }
   environment{
@@ -23,6 +23,7 @@ pipeline{
     SL_TOKEN = (sh(returnStdout: true, script:"aws secretsmanager get-secret-value --region eu-west-1 --secret-id 'btq/tricentis_token' | jq -r '.SecretString' | jq -r '.tricentis_token'" )).trim()
     TAG = "tricentis_${params.TAG}"
   }
+
   stages{
     stage('Init') {
       steps {
