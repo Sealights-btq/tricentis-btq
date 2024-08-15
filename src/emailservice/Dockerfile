@@ -30,10 +30,13 @@ COPY . .
 RUN sl-python config --appname emailservice --branchname ${BRANCH} --buildname ${BUILD_NAME} --workspacepath ./ --token ${SEALIGHTS_TOKEN} --exclude "*grpc*"
 #scan the code
 RUN sl-python scan --scm none --token ${SEALIGHTS_TOKEN}
+#Run unit tests
+RUN sl-python unittest --teststage 'Unit Tests'  --token ${SEALIGHTS_TOKEN} --buildsessionidfile buildSessionId.txt test_all.py
+
 ENV SL_DEBUG=true
 
 # Add the application
 ENV PORT "8080"
-EXPOSE 8080 
+EXPOSE 8080
 #use sl-python to run the code
 CMD sl-python run python email_server.py --labid ${SL_LAB_ID} --token ${SL_TOKEN}

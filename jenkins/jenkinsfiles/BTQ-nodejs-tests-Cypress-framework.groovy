@@ -5,7 +5,7 @@ pipeline {
       defaultContainer "shell"
     }
   }
-    
+
     parameters {
         string(name: 'BRANCH', defaultValue: 'public', description: 'Branch to clone (ahmad-branch)')
         string(name: 'SL_LABID', defaultValue: '', description: 'Lab_id')
@@ -18,25 +18,25 @@ pipeline {
         buildDiscarder logRotator(numToKeepStr: '10')
         timestamps()
     }
-    
-    
-    
+
+
+
     stages{
         stage("Init test"){
             steps{
                 script{
-                git branch: params.BRANCH, url: 'https://github.com/Sealights-btq/tricentis-btq.git'   
+                git branch: params.BRANCH, url: 'https://github.com/Sealights-btq/tricentis-btq.git'
                 }
             }
         }
-        
-        
+
+
         stage('download NodeJs agent and scanning Cypress tests') {
             steps{
                 script{
                     sh """
                     cd integration-tests/cypress/
-                    npm install 
+                    npm install
                     npm install sealights-cypress-plugin
                     export NODE_DEBUG=sl
                     export CYPRESS_SL_ENABLE_REMOTE_AGENT=true
@@ -50,5 +50,5 @@ pipeline {
             }
         }
     }
-    
+
 }

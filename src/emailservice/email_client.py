@@ -23,18 +23,36 @@ from logger import getJSONLogger
 logger = getJSONLogger('emailservice-client')
 
 def send_confirmation_email(email, order):
-  channel = grpc.insecure_channel('[::]:8080')
-  stub = demo_pb2_grpc.EmailServiceStub(channel)
-  try:
-    logger.info('Client for email service.')
-    response = stub.SendOrderConfirmation(demo_pb2.SendOrderConfirmationRequest(
-      email = email,
-      order = order
-    ))
-    logger.info('Request sent.')
-  except grpc.RpcError as err:
-    logger.error(err.details())
-    logger.error('{}, {}'.format(err.code().name, err.code().value))
+    channel = grpc.insecure_channel('[::]:8080')
+    stub = demo_pb2_grpc.EmailServiceStub(channel)
+    try:
+        response = stub.SendOrderConfirmation(demo_pb2.SendOrderConfirmationRequest(
+            email = email,
+            order = order
+        ))
+        logger.info('Request sent.')
+    except grpc.RpcError as err:
+        logger.error(err.details())
+        logger.error('{}, {}'.format(err.code().name, err.code().value))
 
 if __name__ == '__main__':
-  logger.info('Client for email service.')
+    logger.info('Client for email service.')
+
+
+
+
+class EmailClient:
+    def __init__(self):
+        self.logger = getJSONLogger("EmailClient")
+
+    def send_email(self, to, subject, body):
+        if not to:
+            raise ValueError("The 'to' field is required.")
+        # Simulate sending an email by logging the email data
+        email_data = {
+            "to": to,
+            "subject": subject,
+            "body": body
+        }
+        self.logger.info(f"Sending email to {to} with subject '{subject}'")
+        return True

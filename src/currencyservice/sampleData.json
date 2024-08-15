@@ -1,0 +1,94 @@
+{
+  "currencies": [
+    {
+      "units": 300,
+      "nanos": 0,
+      "currency_code": "CHF"
+    },
+    {
+      "units": 150,
+      "nanos": 500000000,
+      "currency_code": "USD"
+    },
+    {
+      "units": 123456789,
+      "nanos": 987654321,
+      "currency_code": "BTC"
+    },
+    {
+      "units": 987654321,
+      "nanos": 123456789,
+      "currency_code": "ETH"
+    },
+    {
+      "units": 0,
+      "nanos": 999999999,
+      "currency_code": "JPY"
+    },
+    {
+      "units": -50,
+      "nanos": 0,
+      "currency_code": "EUR"
+    },
+    {
+      "units": 50,
+      "nanos": -500000000,
+      "currency_code": "GBP"
+    },
+    {
+      "units": 1,
+      "nanos": 999999999,
+      "currency_code": "INR"
+    },
+    {
+      "units": 1000,
+      "nanos": 1,
+      "currency_code": "CAD"
+    },
+    {
+      "units": 0,
+      "nanos": 0,
+      "currency_code": "AUD"
+    },
+    {
+      "units": 500,
+      "nanos": 500000000,
+      "currency_code": "SGD"
+    },
+    {
+      "units": 123.456,
+      "nanos": 789000000,
+      "currency_code": "GBP"
+    },
+    {
+      "units": 0,
+      "nanos": 100000000,
+      "currency_code": "ZAR"
+    },
+    {
+      "units": 1000000,
+      "nanos": 0,
+      "currency_code": "MXN"
+    },
+    {
+      "units": 0,
+      "nanos": 1,
+      "currency_code": "CNY"
+    },
+    {
+      "units": 0,
+      "nanos": 100,
+      "currency_code": "RUB"
+    },
+    {
+      "units": 999999999,
+      "nanos": 999999999,
+      "currency_code": "KRW"
+    },
+    {
+      "units": 0,
+      "nanos": 500000000,
+      "currency_code": "ARS"
+    }
+  ]
+}

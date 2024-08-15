@@ -1,0 +1,13 @@
+{
+  "email_client": {
+    "to": "test@example.com",
+    "subject": "Test Subject",
+    "body": "This is a test email."
+  },
+  "email_server": {
+    "from": "sender@example.com",
+    "to": "receiver@example.com",
+    "subject": "Test Subject",
+    "body": "Test Body"
+  }
+}
