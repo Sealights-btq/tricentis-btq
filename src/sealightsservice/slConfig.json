@@ -7,8 +7,8 @@
   "logLevel": "info",
   "logToConsole": true,
   "logDestination": "console",
-  "scannerJar": "/sealights/sl-build-scanner-4.0.2506.jar",
-  "listenerJar": "/sealights/sl-test-listener-4.0.2506.jar",
+  "scannerJar": "/sealights/sl-build-scanner.jar",
+  "listenerJar": "/sealights/sl-test-listener.jar",
   "sealightsJvmParams":
   {
     "sl.featuresData.lineCoverageVersion": "v2",
