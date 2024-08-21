@@ -5,6 +5,9 @@ const charge = require('../charge.js');
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Charge Function', function() {
+    // Set a global timeout of 30 seconds for all tests
+    this.timeout(30000);
+
     it('should process a valid VISA card', async function() {
         await sleep(20000); // 20-second delay
         const request = {
