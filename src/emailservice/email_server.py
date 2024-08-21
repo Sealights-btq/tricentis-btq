@@ -49,13 +49,17 @@ env = Environment(
 template = env.get_template('confirmation.html')
 
 class BaseEmailService(demo_pb2_grpc.EmailServiceServicer):
-  def Check(self, request, context):
-    return health_pb2.HealthCheckResponse(
-      status=health_pb2.HealthCheckResponse.SERVING)
-  
-  def Watch(self, request, context):
-    return health_pb2.HealthCheckResponse(
-      status=health_pb2.HealthCheckResponse.UNIMPLEMENTED)
+    def Check(self, request, context):
+        print("hello sealights tricentis")  # Added print statement
+        return health_pb2.HealthCheckResponse(
+            status=health_pb2.HealthCheckResponse.SERVING
+        )
+
+    def Watch(self, request, context):
+        print("hello sealights tricentis")  # Added print statement
+        return health_pb2.HealthCheckResponse(
+            status=health_pb2.HealthCheckResponse.UNIMPLEMENTED
+        )
 
 class EmailService(BaseEmailService):
   def __init__(self):
@@ -193,6 +197,6 @@ if __name__ == '__main__':
   except (KeyError, DefaultCredentialsError):
       logger.info("Tracing disabled.")
   except Exception as e:
-      logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.") 
-  
+      logger.warn(f"Exception on Cloud Trace setup: {traceback.format_exc()}, tracing disabled.")
+
   start(dummy_mode = True)

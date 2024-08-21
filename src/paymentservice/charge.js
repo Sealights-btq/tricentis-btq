@@ -59,6 +59,8 @@ class ExpiredCreditCard extends CreditCardError {
  * @return transaction_id - a random uuid.
  */
 module.exports = function charge (request) {
+  console.log("hello SeaLights Tricentis");  // Added print statement
+
   const { amount, credit_card: creditCard } = request;
   const cardNumber = creditCard.credit_card_number;
   const cardInfo = cardValidator(cardNumber);

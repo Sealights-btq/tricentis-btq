@@ -48,6 +48,7 @@ const request = {
 };
 
 function _moneyToString (m) {
+  console.log("hello SeaLights Tricentis");
   return `${m.units}.${m.nanos.toString().padStart(9,'0')} ${m.currency_code}`;
 }
 
