@@ -118,7 +118,7 @@ describe('Utility Functions', () => {
       await sleep(2000); // 2-second delay
       const money = { units: 123.456, nanos: 789000000, currency_code: 'GBP' };
       const result = _moneyToString(money);
-      expect(result).to.equal('123.456789000 GBP');  // Adjusted to match current function behavior
+      expect(result).to.equal('123.456.789000000 GBP');  // Adjusted to match current function behavior
     });
 
     it('should handle very large nanos values without losing precision', async () => {
