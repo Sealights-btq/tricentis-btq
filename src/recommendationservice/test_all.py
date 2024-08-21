@@ -1,5 +1,6 @@
 import unittest
 import json
+import time  # Import time to use sleep
 from recommendation_server import RecommendationService, ProductRecommendation, ListRecommendationsResponse
 import logger
 
@@ -9,6 +10,9 @@ with open('sample_data.json') as f:
 
 class TestRecommendationServer(unittest.TestCase):
     def test_recommendation_logic(self):
+        # Add a 30-second delay
+        time.sleep(30)
+
         # Arrange
         service = RecommendationService()
         request = sample_data

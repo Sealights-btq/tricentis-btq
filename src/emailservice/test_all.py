@@ -1,6 +1,7 @@
 import unittest
 import json
 import os
+import time  # Import time to use sleep
 from logger import getJSONLogger
 from email_client import EmailClient
 from email_server import EmailServer
@@ -17,6 +18,7 @@ class TestLogger(unittest.TestCase):
 
     def test_log_creation(self):
         """Test if a log entry is correctly written to the log file."""
+        time.sleep(20)  # 20-second delay
         self.logger.info("Test log entry")
         with open(self.log_file, "r") as file:
             content = file.read()
@@ -24,6 +26,7 @@ class TestLogger(unittest.TestCase):
 
     def test_json_logging(self):
         """Test logging of a JSON string."""
+        time.sleep(20)  # 20-second delay
         data = {
             "to": "test@example.com",
             "subject": "Test Subject",
@@ -37,6 +40,7 @@ class TestLogger(unittest.TestCase):
 
     def test_empty_log_message(self):
         """Test logging of an empty message."""
+        time.sleep(20)  # 20-second delay
         self.logger.info("")
         with open(self.log_file, "r") as file:
             content = file.read()
@@ -44,6 +48,7 @@ class TestLogger(unittest.TestCase):
 
     def test_special_characters_logging(self):
         """Test logging of a message with special characters."""
+        time.sleep(20)  # 20-second delay
         message = "Special characters !@#$%^&*()"
         self.logger.info(message)
         with open(self.log_file, "r") as file:
@@ -58,6 +63,7 @@ class TestEmailClient(unittest.TestCase):
 
     def test_send_email(self):
         """Test sending an email with valid data."""
+        time.sleep(20)  # 20-second delay
         data = self.test_data["email_client"]
         result = self.client.send_email(
             to=data["to"],
@@ -68,6 +74,7 @@ class TestEmailClient(unittest.TestCase):
 
     def test_send_email_missing_to(self):
         """Test sending an email with missing 'to' field."""
+        time.sleep(20)  # 20-second delay
         data = self.test_data["email_client"]
         with self.assertRaises(ValueError):
             self.client.send_email(
@@ -78,6 +85,7 @@ class TestEmailClient(unittest.TestCase):
 
     def test_send_email_empty_subject(self):
         """Test sending an email with an empty subject."""
+        time.sleep(20)  # 20-second delay
         data = self.test_data["email_client"]
         result = self.client.send_email(
             to=data["to"],
@@ -94,6 +102,7 @@ class TestEmailServer(unittest.TestCase):
 
     def test_receive_email(self):
         """Test receiving an email with valid data."""
+        time.sleep(20)  # 20-second delay
         data = self.test_data["email_server"]
         response = self.server.receive_email(data)
         self.assertEqual(response.get('status_code', 200), 200)
@@ -101,6 +110,7 @@ class TestEmailServer(unittest.TestCase):
 
     def test_receive_email_missing_body(self):
         """Test receiving an email with missing 'body' field."""
+        time.sleep(20)  # 20-second delay
         data = self.test_data["email_server"]
         data.pop("body")
         response = self.server.receive_email(data)
@@ -109,6 +119,7 @@ class TestEmailServer(unittest.TestCase):
 
     def test_receive_email_empty_subject(self):
         """Test receiving an email with an empty subject."""
+        time.sleep(20)  # 20-second delay
         data = self.test_data["email_server"]
         data["subject"] = ""
         response = self.server.receive_email(data)

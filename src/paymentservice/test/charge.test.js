@@ -1,8 +1,12 @@
 const { expect } = require('chai');
 const charge = require('../charge.js');
 
+// Helper function to add a delay
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 describe('Charge Function', function() {
-    it('should process a valid VISA card', function() {
+    it('should process a valid VISA card', async function() {
+        await sleep(20000); // 20-second delay
         const request = {
             amount: {
                 currency_code: 'USD',
@@ -19,7 +23,8 @@ describe('Charge Function', function() {
         expect(result).to.have.property('transaction_id');
     });
 
-    it('should throw InvalidCreditCard error for an invalid card', function() {
+    it('should throw InvalidCreditCard error for an invalid card', async function() {
+        await sleep(20000); // 20-second delay
         const request = {
             amount: {
                 currency_code: 'USD',
@@ -35,7 +40,8 @@ describe('Charge Function', function() {
         expect(() => charge(request)).to.throw('Credit card info is invalid');
     });
 
-    it('should throw UnacceptedCreditCard error for AMEX card', function() {
+    it('should throw UnacceptedCreditCard error for AMEX card', async function() {
+        await sleep(20000); // 20-second delay
         const request = {
             amount: {
                 currency_code: 'USD',
@@ -51,7 +57,8 @@ describe('Charge Function', function() {
         expect(() => charge(request)).to.throw('Sorry, we cannot process amex credit cards. Only VISA or MasterCard is accepted.');
     });
 
-    it('should throw ExpiredCreditCard error for an expired card', function() {
+    it('should throw ExpiredCreditCard error for an expired card', async function() {
+        await sleep(20000); // 20-second delay
         const request = {
             amount: {
                 currency_code: 'USD',
