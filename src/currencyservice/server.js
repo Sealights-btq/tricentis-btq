@@ -171,6 +171,9 @@ function check (call, callback) {
   console.log('change');
   callback(null, { status: 'SERVING' });
 }
+function nonAccessible (call, callback) {
+  console.log('this method is not accessible.');
+}
 
 /**
  * Starts an RPC server that receives requests for the
